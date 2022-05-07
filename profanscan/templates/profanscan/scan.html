@@ -1,0 +1,24 @@
+{% extends 'profanscan/base.html' %}
+
+{% load static %}
+
+{% block content %}
+
+<div class="container text-center">
+    <h1>
+        <img src="{% static 'profanscan/profanid_logo.png' %}" height="100"/>
+        Bad words identified!
+        <img src="{% static 'profanscan/profanid_logo.png' %}" height="100" />
+    </h1>
+
+</div>
+
+
+<div class="container text-center">
+<!--    {% for cuss, context in scan_result %}-->
+<!--        {{ cuss }}: {{ context|safe }} <br><br>-->
+<!--    {% endfor %}-->
+    {{ lyric_markup|safe }}
+</div>
+
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends 'profanscan/base.html' %}
+
+{% load static %}
+
+{% block content %}
+
+<h1>No bad words identified!</h1>
+
+<h3>Check the lyrics to be sure though: </h3>
+
+<p>
+    {{ lyrics|safe }}
+</p>
+
+{% endblock %}
