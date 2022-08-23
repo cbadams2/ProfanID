@@ -27,9 +27,9 @@ class ProfanScan:
         self.genius = lyricsgenius.Genius(client_access_token)
 
     def get_lyrics(self):
-        song = self.genius.search_song(self.song_title, self.artist_name)
-        self.lyrics = song.lyrics
-        return song.lyrics
+        self.song = self.genius.search_song(self.song_title, self.artist_name)
+        self.lyrics = self.song.lyrics
+        return self.song.lyrics
 
     def lyric_scan(self):
         strip_lyrics = self.lyrics.replace('\n',' ').split(' ')

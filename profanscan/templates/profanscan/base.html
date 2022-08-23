@@ -21,6 +21,105 @@
 
 <body>
 
+  <nav id="topNav" class="navbar navbar-expand-md navbar-light" style="background-color: #B56576;">
+    <div class="container">
+      <a class="navbar-brand" href="{% url 'home' %}">
+        <img src="{% static "profanscan/profanid_logo.png" %}" width="40" height="40" class="d-inline-block align-top" alt="ProfanID Logo">
+        <span class="navbar-brand mb-0 h1">ProfanID</span>
+      </a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse text-center" id="navbarNav">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="https://github.com/cbadams2/ProfanID" target="_blank">
+              <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-github" viewBox="0 0 16 16">
+                <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"/>
+              </svg>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" data-target="#exampleModal" data-toggle="modal" href="#exampleModal" id="MainNavHelp">
+              <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-question-circle" viewBox="0 0 16 16">
+                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                <path d="M5.255 5.786a.237.237 0 0 0 .241.247h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286zm1.557 5.763c0 .533.425.927 1.01.927.609 0 1.028-.394 1.028-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94z"/>
+              </svg>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-body">
+          <h3>ProfanID is made by Colin Adams</h3>
+          <p>
+            You can check if a song has explicit lyrics by typing the
+            artist's name and the song's title into the boxes and clicking
+            ProfanScan. If the lyrics can be found, you will either see that
+            explicit words have been identified in your song, or that no explicit
+            language was found. If explicit words are found, the lines
+            containing them will be <mark>highlighted</mark> and the putative
+            explicit language will be <u><b>bolded and underlined</b></u>.
+            <br />
+            <br />
+            Please note that certain explicit words are often used in compound words
+            and the base explicit word may be found in other words. This search
+            is thorough, and as a result, it may identify "false positives":
+            e.g., words that contain explicit words, but are not themselves
+            explicit.
+            <br />
+            <br />
+            If lyrics can't be located, or the API yields the wrong result, you
+            will see a page that tells you that the lyrics could not be found.
+            <br />
+            <br />
+            This website uses the API from genius.com, and as such, is limited
+            by their database.
+            <br />
+          </p>
+          <h3>
+            History of ProfanID
+          </h3>
+          <p>
+            I wrote the original code for ProfanID when I was a freshman in
+            college. I was DJing the 3am slot for my college radio station,
+            which was known as "Safe Harbor" hours, basically when the FCC
+            didn't really care what went out over the air, since all the
+            children were presumed to be asleep by that hour. The prime-time
+            slots, however, were not safe-harbor, so explicit language was
+            not permitted to be broadcast. My thinking was that,
+            if I ever did get a prime-time slot, it
+            sure would be nice to have a tool that could help me check if
+            the music I would play was clean or not.. Thus, ProfanID was born.
+            <br />
+            <br />
+            Around the same time, I was teaching myself to code for the very
+            first time. ProfanID was a great excuse to test things out and
+            do some trial by fire. The first iteration was a monstrosity,
+            as would be expected. And so were the next few after that.
+            <br />
+            <br />
+            Now, some 8-odd years later, I'm learning to make a website,
+            and the wheel turns back round again.
+            I never did get a prime-time slot: turns out I was an atrocious
+            DJ.. but ProfanID lives on. Hope that it's proven useful (or amusing)
+            to you, and if so, maybe consider donating a few $$ to keep
+            the project afloat!
+            <br />
+            <br />
+            Colin
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <div class="container">
     {% block content %}{% endblock %}
   </div>

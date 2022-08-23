@@ -18,6 +18,11 @@ def profanscan(request):
         scan.lyric_scan()
         scan.markup_lyrics()
 
+        # meant to avoid issues where the API provides the wrong result
+        # test case: Shaking Ass by Jerry Paper
+        if song_title.lower() not in scan.song.title.lower().strip():
+            raise Exception
+
         if len(scan.profan_ids) > 0:
             profan_zip = zip(scan.profan_ids, scan.profan_contexts)
             return render(request,

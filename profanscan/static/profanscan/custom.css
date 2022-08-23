@@ -6,6 +6,12 @@
     color: rgba(0,0,0,.5) !important;
 }
 
+.navbar-brand
+{
+  font-family: 'Lato', sans-serif;
+  font-size: 24px;
+}
+
 body {
     font-family: 'Lato', sans-serif;
 }
