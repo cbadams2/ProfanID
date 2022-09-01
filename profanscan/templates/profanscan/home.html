@@ -124,29 +124,41 @@
     <h1>ProfanID</h1>
     <br>
 
-    <div id="autocomplete artist" class="autocomplete text-left">
-      <input class="autocomplete-input"
-        placeholder="Artist name"
-        aria-label="Artist name"
-      >
-      <ul class="autocomplete-result-list"></ul>
-    </div>
-
-    <div id="autocomplete song" class="autocomplete text-left">
-      <input class="autocomplete-input"
-        placeholder="Song title"
-        aria-label="Song title"
-      >
-      <ul class="autocomplete-result-list"></ul>
-    </div>
-
     <form action="{% url 'profanscan' %}">
-        <label for="artist_name">Artist Name:</label>
-        <input type="text" id="artist_name" name="artist_name"><br><br>
-        <label for="song_title">Song Title:</label>
-        <input type="text" id="song_title" name="song_title"><br><br>
+        <div id="autocomplete artist" class="autocomplete text-left">
+          <input class="autocomplete-input"
+             placeholder="Artist name"
+             aria-label="Artist name"
+             type="text"
+             id="artist_name"
+             name="artist_name"
+          >
+          <ul class="autocomplete-result-list"></ul>
+        </div>
+
+        <br>
+
+        <div id="autocomplete song" class="autocomplete text-left">
+          <input class="autocomplete-input"
+             placeholder="Song title"
+             aria-label="Song title"
+             type="text"
+             id="song_title"
+             name="song_title"
+          >
+          <ul class="autocomplete-result-list"></ul>
+        </div>
+        <br>
         <input type="submit" value="ProfanScan" class="btn btn-primary">
     </form>
+
+<!--    <form action="{% url 'profanscan' %}">-->
+<!--        <label for="artist_name">Artist Name:</label>-->
+<!--        <input type="text" id="artist_name" name="artist_name"><br><br>-->
+<!--        <label for="song_title">Song Title:</label>-->
+<!--        <input type="text" id="song_title" name="song_title"><br><br>-->
+<!--        <input type="submit" value="ProfanScan" class="btn btn-primary">-->
+<!--    </form>-->
     <br>
 </div>
 
