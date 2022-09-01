@@ -3,10 +3,112 @@
 {% load static %}
 
 {% block content %}
+<script type="module">
+
+    var artist_name = null;
+    var song_list = null;
+    new Autocomplete(document.getElementById('autocomplete artist'), {
+      search: input => {
+        const url = `/search_artist/?name=${input}`;
+        return new Promise(resolve => {
+          if (input.length < 1) {
+            return resolve([])
+          }
+          if (artist_name != null) {
+            if (input != artist_name || typeof input === undefined || input.length < 1 || input.length < artist_name.length) {
+                console.log("im here");
+                artist_name = null;
+            }
+          }
+
+          fetch(url)
+            .then(response => response.json())
+            .then(data => {
+              resolve(data.name)
+            })
+        })
+      },
+
+      onSubmit: result => {
+        artist_name = result; // pass clicked results to global
+
+      }
+    })
+
+    $('#ull').click(function (e) {
+        $.ajax({
+            url: '',
+            type: 'GET',
+            data: {
+                valname: name,
+            },
+            success: function (response) {
+                window.location = response.urlLik;
+            }
+        })
+    })
+
+    var song_name;
+    new Autocomplete(document.getElementById('autocomplete song'), {
+      search: input_song => {
+        const url = `/search_song/?name=${input_song}&artist=${artist_name}`;
+        return new Promise(resolve => {
+          if (input_song.length < 1) {
+            return resolve([])
+          }
+
+          fetch(url)
+            .then(response => response.json())
+            .then(data => {
+              resolve(data.name)
+            })
+        })
+      },
+
+      onSubmit: result => {
+        song_name = result; // pass clicked results to global
+      }
+    })
+
+    $('#ull').click(function (e) {
+        $.ajax({
+            url: '',
+            type: 'GET',
+            data: {
+                valname: name,
+            },
+            success: function (response) {
+                window.location = response.urlLik;
+            }
+        })
+    })
+
+
+
+</script>
+
+
 
 <div class="container text-center">
     <h1>ProfanID</h1>
     <br>
+
+    <div id="autocomplete artist" class="autocomplete text-left">
+      <input class="autocomplete-input"
+        placeholder="Artist name"
+        aria-label="Artist name"
+      >
+      <ul class="autocomplete-result-list"></ul>
+    </div>
+
+    <div id="autocomplete song" class="autocomplete text-left">
+      <input class="autocomplete-input"
+        placeholder="Song title"
+        aria-label="Song title"
+      >
+      <ul class="autocomplete-result-list"></ul>
+    </div>
+
     <form action="{% url 'profanscan' %}">
         <label for="artist_name">Artist Name:</label>
         <input type="text" id="artist_name" name="artist_name"><br><br>
@@ -16,5 +118,7 @@
     </form>
     <br>
 </div>
+
+
 
 {% endblock %}

@@ -26,6 +26,50 @@ class ProfanScan:
 
         self.genius = lyricsgenius.Genius(client_access_token)
 
+    def search_artists(self, **kwargs):
+        artist_dict = self.genius.search_artists(self.artist_name, **kwargs)
+        search_list = []
+        for i in range(len(artist_dict['sections'][0]['hits'])):
+            artist_hit = artist_dict['sections'][0]['hits'][i]['result']['name']
+            print(artist_hit)
+            search_list.append(artist_hit)
+        return search_list
+
+    def get_songs_by_artist(self, **kwargs):
+        artist = self.genius.search_artist(self.artist_name, max_songs=0, **kwargs)
+        dict = {}
+        page = 1
+        songs = []
+        while page:
+            print(page*50)
+            request = self.genius.artist_songs(artist.id,
+                                               sort='popularity',
+                                               per_page=50,
+                                               page=page,
+                                               )
+            songs.extend(request['songs'])
+            page=request['next_page']
+
+        song_list = []
+        for i in range(len(songs)):
+            song_list.append(songs[i]['title'])
+        print(song_list)
+
+        return song_list
+
+    def search_songs(self, **kwargs):
+        song_dict = self.genius.search_songs(self.song_title, **kwargs)
+        song_search_list = []
+        for i in range(len(song_dict['hits'])):
+            song_hit = song_dict['hits'][i]['result']['title']
+            song_search_list.append(song_hit)
+        print(song_search_list)
+
+        return song_search_list
+
+
+
+
     def get_lyrics(self):
         self.song = self.genius.search_song(self.song_title, self.artist_name)
         self.lyrics = self.song.lyrics
