@@ -5,6 +5,28 @@
 {% block content %}
 <script type="module">
 
+    var substringMatcher = function(strs) {
+      return function findMatches(q, cb) {
+        var matches, substringRegex;
+
+        // an array that will be populated with substring matches
+        matches = [];
+
+        // regex used to determine if a string contains the substring `q`
+        substrRegex = new RegExp(q, 'i');
+
+        // iterate through the pool of strings and for any string that
+        // contains the substring `q`, add it to the `matches` array
+        $.each(strs, function(i, str) {
+          if (substrRegex.test(str)) {
+            matches.push(str);
+          }
+        });
+
+        cb(matches);
+      };
+    };
+
     var artist_name = null;
     var song_list = null;
     new Autocomplete(document.getElementById('autocomplete artist'), {
@@ -18,6 +40,7 @@
             if (input != artist_name || typeof input === undefined || input.length < 1 || input.length < artist_name.length) {
                 console.log("im here");
                 artist_name = null;
+                song_list = null;
             }
           }
 
@@ -31,7 +54,11 @@
 
       onSubmit: result => {
         artist_name = result; // pass clicked results to global
-
+        const url = `/search_song/?artist=${artist_name}`;
+        fetch(url)
+          .then(response => response.json())
+          .then(data => song_list = data.name)
+          .then(() => console.log(song_list))
       }
     })
 
@@ -56,12 +83,16 @@
           if (input_song.length < 1) {
             return resolve([])
           }
-
-          fetch(url)
-            .then(response => response.json())
-            .then(data => {
-              resolve(data.name)
-            })
+          if (song_list != null) {
+            return resolve(song_list.filter((song) => song.toLowerCase().includes(input_song.toLowerCase())))
+          }
+          else{
+              fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                  resolve(data.name)
+                })
+          }
         })
       },
 

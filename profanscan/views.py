@@ -71,6 +71,7 @@ def search_song(request):
     if artist_name != 'null':
         scan = ProfanScan(artist_name=artist_name)
         songs_by_artist = scan.get_songs_by_artist()
+        songs_by_artist = [song.replace(u'’', u"'") for song in songs_by_artist]
         return JsonResponse({'status':200, 'name':songs_by_artist})
     else:
         scan = ProfanScan(song_title=song_search_str)
