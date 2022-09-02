@@ -80,6 +80,9 @@
       search: input_song => {
         const url = `/search_song/?name=${input_song}&artist=${artist_name}`;
         return new Promise(resolve => {
+          if (artist_name != null && song_list == null) {
+            return resolve([`Still loading titles by ${artist_name}`])
+          }
           if (input_song.length < 1) {
             return resolve([])
           }
@@ -124,7 +127,7 @@
     <h1>ProfanID</h1>
     <br>
 
-    <form action="{% url 'profanscan' %}">
+    <form action="{% url 'profanscan' %}" onkeydown="return event.key != 'Enter';">
         <div id="autocomplete artist" class="autocomplete text-left">
           <input class="autocomplete-input"
              placeholder="Artist name"
