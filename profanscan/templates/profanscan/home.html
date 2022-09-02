@@ -84,6 +84,9 @@
             return resolve([`Still loading titles by ${artist_name}`])
           }
           if (input_song.length < 1) {
+            if (artist_name != null && song_list != null) {
+                return resolve(song_list)
+            }
             return resolve([])
           }
           if (song_list != null) {
