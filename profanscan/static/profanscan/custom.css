@@ -20,6 +20,11 @@ body {
     font-size: 6rem;
 }
 
+.autocomplete {
+  max-width: 400px;
+  margin: 0 auto;
+}
+
 @media (min-width: 992px) {
     #hometext {
         font-size: 4rem;

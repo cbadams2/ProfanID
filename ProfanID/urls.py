@@ -21,4 +21,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.home, name='home'),
     path('profanscan/', views.profanscan, name='profanscan'),
+    path('search_artist/', views.search_artist, name='search_artist'),
+    path('search_song/', views.search_song, name='search_song'),
 ]
