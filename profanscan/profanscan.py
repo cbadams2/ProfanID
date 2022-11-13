@@ -1,9 +1,18 @@
 import lyricsgenius
 import re
+import os
+import yaml
+from django.conf import settings
 
-client_id = "iEuxCOVRaLMDuocugCaJ-de6WK4n-CWQpMEC6eRsqAr-WXNGVOMZ1uqsqDqT3K9f"
-client_secret = "O3e6kRICrYQPocj-hG_uCq9WapilQN9X3Yu_D1Zh7RO0NtLl6wwS6nwuUubpOYnYoSum6gxai69HWRDtTbXrCQ"
-client_access_token = "4I3BgkfVa9PxIQLYus67euEQq_hXCsaylIT0QmRK7EL2E00HOA7HvJHHtwWdyvWU"
+base_dir = settings.BASE_DIR
+config_fn = os.path.join(base_dir, str('profanscan/static/profanscan/config.yml'))
+
+with open(config_fn, "r") as f:
+    config = yaml.safe_load(f)
+
+client_id           = config['genius_api']['client_id']
+client_secret       = config['genius_api']['client_secret']
+client_access_token = config['genius_api']['client_access_token']
 
 # genius = lyricsgenius.Genius(client_access_token)
 #
@@ -13,7 +22,6 @@ client_access_token = "4I3BgkfVa9PxIQLYus67euEQq_hXCsaylIT0QmRK7EL2E00HOA7HvJHHt
 # song = genius.search_song(song_title, artist_name)
 # print(song.title)
 # print(song.lyrics)
-
 
 class ProfanScan:
     def __init__(self, artist_name=None, song_title=None, bad_words_list=None):
