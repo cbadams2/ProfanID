@@ -1,4 +1,5 @@
 import lyricsgenius
+import requests
 import re
 import os
 import yaml
@@ -33,14 +34,12 @@ class ProfanScan:
         self.profan_contexts = []
 
         self.genius = lyricsgenius.Genius(client_access_token)
+        self.deezer_api = "https://api.deezer.com"
 
-    def search_artists(self, **kwargs):
-        artist_dict = self.genius.search_artists(self.artist_name, **kwargs)
-        search_list = []
-        for i in range(len(artist_dict['sections'][0]['hits'])):
-            artist_hit = artist_dict['sections'][0]['hits'][i]['result']['name']
-            print(artist_hit)
-            search_list.append(artist_hit)
+    def search_artists(self, n_listed = 30):
+        api_search_str = f"search?limit={n_listed}&q={self.artist_name}&index={n_listed}"
+        response = requests.get(f"{self.deezer_api}/{api_search_str}")
+        search_list = list(set([entry['artist']['name'] for entry in response.json()['data']]))
         return search_list
 
     def get_songs_by_artist(self, **kwargs):
