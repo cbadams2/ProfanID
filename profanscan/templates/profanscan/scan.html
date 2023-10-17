@@ -5,11 +5,20 @@
 {% block content %}
 
 <div class="container text-center">
+    <br>
     <h1>
         <img src="{% static 'profanscan/profanid_logo.png' %}" height="100"/>
         Bad words identified!
         <img src="{% static 'profanscan/profanid_logo.png' %}" height="100" />
     </h1>
+    <br>
+    <h4>
+        Unfortunately, we don't have the funds to display the full lyrics.
+        If you wish to see the full lyrics here at some point, please consider supporting the author.
+    </h4>
+    <br />
+    {{ lyric_markup|safe }}
+
 
 </div>
 
@@ -18,7 +27,7 @@
 <!--    {% for cuss, context in scan_result %}-->
 <!--        {{ cuss }}: {{ context|safe }} <br><br>-->
 <!--    {% endfor %}-->
-    {{ lyric_markup|safe }}
+
 </div>
 
 {% endblock %}
