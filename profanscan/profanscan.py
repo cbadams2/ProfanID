@@ -120,6 +120,7 @@ class ProfanScan:
         # print(request_url)
         # response = requests.get(request_url)
         # print(response)
+        self.lyrics = self.lyrics.split("******* This Lyrics is NOT for Commercial use *******")[0]
         print(self.lyrics)
         return self.lyrics
 
