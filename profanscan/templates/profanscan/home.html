@@ -28,7 +28,6 @@
     };
 
     var artist_name = null;
-    var song_list = null;
     new Autocomplete(document.getElementById('autocomplete artist'), {
       search: input => {
         const url = `/search_artist/?name=${input}`;
@@ -40,7 +39,6 @@
             if (input != artist_name || typeof input === undefined || input.length < 1 || input.length < artist_name.length) {
                 console.log("im here");
                 artist_name = null;
-                song_list = null;
             }
           }
 
@@ -54,11 +52,6 @@
 
       onSubmit: result => {
         artist_name = result; // pass clicked results to global
-        const url = `/search_song/?artist=${artist_name}`;
-        fetch(url)
-          .then(response => response.json())
-          .then(data => song_list = data.name)
-          .then(() => console.log(song_list))
       }
     })
 
@@ -80,17 +73,8 @@
       search: input_song => {
         const url = `/search_song/?name=${input_song}&artist=${artist_name}`;
         return new Promise(resolve => {
-          if (artist_name != null && song_list == null) {
-            return resolve([`Still loading titles by ${artist_name}`])
-          }
           if (input_song.length < 1) {
-            if (artist_name != null && song_list != null) {
-                return resolve(song_list)
-            }
             return resolve([])
-          }
-          if (song_list != null) {
-            return resolve(song_list.filter((song) => song.toLowerCase().includes(input_song.toLowerCase())))
           }
           else{
               fetch(url)

@@ -22,10 +22,10 @@ def profanscan(request):
 
         # meant to avoid issues where the API provides the wrong result
         # test case: Shaking Ass by Jerry Paper
-        if song_title.lower() not in scan.song.title.lower().strip():
-            raise Exception
+        # if song_title.lower() not in scan.song.title.lower().strip():
+        #     raise Exception
 
-        if len(scan.profan_ids) > 0:
+        if scan.has_bad_word:
             profan_zip = zip(scan.profan_ids, scan.profan_contexts)
             return render(request,
                           'profanscan/scan.html',
@@ -69,11 +69,14 @@ def search_song(request):
     print(song_search_str)
     print(artist_name)
     if artist_name != 'null':
-        scan = ProfanScan(artist_name=artist_name)
+        print('entered if')
+        scan = ProfanScan(artist_name=artist_name, song_title=song_search_str)
         songs_by_artist = scan.get_songs_by_artist()
         songs_by_artist = [song.replace(u'’', u"'") for song in songs_by_artist]
+        print(songs_by_artist)
         return JsonResponse({'status':200, 'name':songs_by_artist})
     else:
+        print('entered else')
         scan = ProfanScan(song_title=song_search_str)
         song_search_list = scan.search_songs()
         return JsonResponse({'status':200, 'name':song_search_list})
