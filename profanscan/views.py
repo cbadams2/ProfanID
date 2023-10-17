@@ -8,6 +8,19 @@ def home(request):
     return render(request, 'profanscan/home.html')
 
 def profanscan(request):
+    """Retrieve the song title and artist name from the page,
+    and perform the ProfanScan on the lyrics (if they can be found).
+    Deliver a specific page depending on whether profanity is found or not.
+
+    Parameters
+    ----------
+    request : HttpRequest
+        Metadata from request
+    Returns
+    -------
+    HttpResponse
+        Render of a specific HTML page based on the request metadata
+    """
     song_title = request.GET.get('song_title')
     artist_name = request.GET.get('artist_name')
     bad_words_qs = BadWord.objects.all()
@@ -19,11 +32,6 @@ def profanscan(request):
         scan.get_lyrics()
         scan.lyric_scan()
         scan.markup_lyrics()
-
-        # meant to avoid issues where the API provides the wrong result
-        # test case: Shaking Ass by Jerry Paper
-        # if song_title.lower() not in scan.song.title.lower().strip():
-        #     raise Exception
 
         if scan.has_bad_word:
             profan_zip = zip(scan.profan_ids, scan.profan_contexts)
@@ -56,27 +64,48 @@ def profanscan(request):
                       }
                       )
 
-def search_artist(request):
+def search_artist(request) -> JsonResponse:
+    """Wrapper to deliver the results of search_artist to the page.
+
+    Parameters
+    ----------
+    request : HttpRequest
+        Metadata from request
+
+    Returns
+    -------
+    JsonResponse
+        A JSON filled with the information provided by the python function.
+    """
     artist_search_str = request.GET.get("name")
     scan = ProfanScan(artist_name=artist_search_str)
     artist_search_list = scan.search_artists()
     return JsonResponse({'status':200, 'name':artist_search_list})
 
-def search_song(request):
-    print("yello!!!")
+def search_song(request) -> JsonResponse:
+    """Wrapper to deliver the results of search_song or get_song_by_artist to the page.
+
+        Parameters
+        ----------
+        request : HttpRequest
+            Metadata from request
+
+        Returns
+        -------
+        JsonResponse
+            A JSON filled with the information provided by the python function.
+        """
     song_search_str = request.GET.get("name")
     artist_name = request.GET.get("artist")
     print(song_search_str)
     print(artist_name)
     if artist_name != 'null':
-        print('entered if')
         scan = ProfanScan(artist_name=artist_name, song_title=song_search_str)
         songs_by_artist = scan.get_songs_by_artist()
         songs_by_artist = [song.replace(u'’', u"'") for song in songs_by_artist]
         print(songs_by_artist)
         return JsonResponse({'status':200, 'name':songs_by_artist})
     else:
-        print('entered else')
         scan = ProfanScan(song_title=song_search_str)
         song_search_list = scan.search_songs()
         return JsonResponse({'status':200, 'name':song_search_list})
